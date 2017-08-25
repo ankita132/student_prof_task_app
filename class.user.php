@@ -8,7 +8,6 @@ class USER{
 
   public function register($name,$pass,$desig){
     try{
-      $new_pass = password_hash($pass, PASSWORD_DEFAULT);
 
       $stmt = $this->db->prepare("INSERT INTO student(username,password,designation) VALUES(:name, :pass, :desig)");
 
@@ -30,7 +29,7 @@ class USER{
       $stmt->execute(array(':name'=>$name, ':desig'=>$desig));
       $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
       if($stmt->rowCount() > 0){
-        if(password_verify($pass, $userrow['password'])){
+        if($pass == $userrow['password'])){
           $_SESSION['user_id'] = $userrow['id'];
           return true;
         }
