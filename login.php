@@ -1,3 +1,33 @@
+<?php
+require_once 'db.php';
+
+if(isset($_POST['login'])){
+  $name = $_POST['name'];
+  $pass = $_POST['password'];
+  $desig = $_POST['group1'];
+
+  if($user->login($name,$pass,$desig)){
+    if($desig == 'student'){
+      $user->redirect('student.php');
+    }
+    elseif ($desig == 'professor') {
+      $user->redirect('prof.php');
+    }
+  }
+  else{
+    if($user->register($name,$pass,$desig)){
+      if($desig == 'student'){
+        $user->redirect('student.php');
+      }
+      elseif ($desig == 'professor') {
+        $user->redirect('prof.php');
+      }
+    }
+  }
+}
+
+ ?>
+
 <!doctype html>
 <html>
 <head>
@@ -22,13 +52,13 @@
    <form class="col s12" method="post">
      <div class="row">
        <div class="input-field col s12">
-         <input id="name" type="text" class="validate">
+         <input id="name" type="text" name="name" class="validate">
          <label for="name">Username</label>
        </div>
      </div>
      <div class="row">
        <div class="input-field col s12">
-         <input id="password" type="password" class="validate">
+         <input id="password" type="password" name="password" class="validate">
          <label for="password">Password</label>
        </div>
      </div>
@@ -41,7 +71,7 @@
          <label for="professor">Professor</label>
        </p>
      </br>
-       <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">Submit
+       <button class="btn waves-effect waves-light deep-purple" type="submit" name="login">Submit
    <i class="material-icons right">send</i>
       </button>
    </form>
@@ -51,3 +81,4 @@
   </div>
 </body>
 </html>
+
