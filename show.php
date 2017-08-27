@@ -22,3 +22,4 @@ $stmt2=$task->showtasks($_SESSION['name']);
       }
       ?>
 </ul>
+<script src="./js/scriptprof.js"></script>

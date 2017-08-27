@@ -19,7 +19,7 @@ $('.assigned').click(function(){
     console.log("A");
     $.ajax({
   type:"POST",
-  url:"showstudent.php",
+  url:"show.php",
   dataType:'html',
   success:function(response){
      $(".card-content").html(response);
@@ -30,13 +30,39 @@ $('.assigned').click(function(){
 });
 
 function complete(sno){
-  $.ajax({
+$.ajax({
 type:"POST",
 url:"complete.php",
 data:{"sno":sno},
 success:function(){
-  alert("completed");
+alert("completed");
+show();
 }
-  });
+});
 }
+
+function delete2(sno){
+ $.ajax({
+type:"POST",
+url:"delete.php",
+data:{"sno":sno},
+success:function(){
+alert("Deleted");
+show();
+}
+});
+}
+
+function edit(sno){
+$.ajax({
+  type:"POST",
+  url:"edit.php",
+  data:{"sno":sno},
+  success:function(){
+    alert("edited");
+    show();
+  }
+})
+}
+
 });

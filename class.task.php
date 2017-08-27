@@ -16,6 +16,16 @@ class TASK{
       echo $e->getMessage();
     }
 	}
+	public function showalltasks(){
+		try{
+	      $stmt = $this->db->prepare("SELECT * FROM task");
+	      $stmt->execute();
+	   	  return $stmt;
+	    }
+	    catch(PDOException $e){
+	      echo $e->getMessage();
+	    }
+	}
   public function complete($sno){
     try{
       $stmt = $this->db->prepare("UPDATE task SET status= 'Completed' WHERE sno=:sno");

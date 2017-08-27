@@ -27,8 +27,8 @@ $user_name = $_SESSION['name'];
     <div class="nav-wrapper deep-purple">
       <a href="#" class="brand-logo">Student Dashboard</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href=""><i class="material-icons left">note</i>Tasks Assigned</a></li>
-        <li><a href=""><i class="material-icons left">description</i>All Tasks</a></li>
+        <li class="assigned"><i class="material-icons left">note</i>Tasks Assigned&nbsp;&nbsp;</li>
+        <li class="all"><i class="material-icons left">description</i>All Tasks&nbsp;&nbsp;</li>
         <li><a href="logout.php"><i class="material-icons left">lock_outline</i>Logout</a></li>
       </ul>
     </div>
@@ -46,7 +46,7 @@ $user_name = $_SESSION['name'];
 
 
      echo   '<li class="collection-item"><div><b>'.$userrow2['task'].'
-          </b></br><span class="title">Assigned by '.$userrow2['prof'].' </span>
+          </b></br><span class="title">Assigned by <b>'.$userrow2['prof'].'</b> </span>
           <div onclick="complete('.$userrow2['sno'].')" class="secondary-content">
             <i class="material-icons deep-purple-text">done_all</i>
           </div>
@@ -60,20 +60,6 @@ $user_name = $_SESSION['name'];
   </div>
 </div>
 
-
-<script>
-
-function complete(sno){
-  $.ajax({
-type:"POST",
-url:"complete.php",
-data:{"sno":sno},
-success:function(){
-  alert("completed");
-}
-  });
-}
-
-</script>
+<script src="./js/script.js"></script>
 </body>
 </html>

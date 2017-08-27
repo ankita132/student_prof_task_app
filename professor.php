@@ -56,41 +56,7 @@ success:function(response){
   });
 }
 show();
-  function complete(sno){
-  $.ajax({
-type:"POST",
-url:"complete.php",
-data:{"sno":sno},
-success:function(){
-  alert("completed");
-  show();
-}
-  });
-}
-
-function delete2(sno){
-   $.ajax({
-type:"POST",
-url:"delete.php",
-data:{"sno":sno},
-success:function(){
-  alert("Deleted");
-  show();
-}
-  });
-}
-
-function edit(sno){
-  $.ajax({
-    type:"POST",
-    url:"edit.php",
-    data:{"sno":sno},
-    success:function(){
-      alert("edited");
-      show();
-    }
-  })
-}
 </script>
+<script src="./js/scriptprof.js"></script>
 </body>
 </html>
