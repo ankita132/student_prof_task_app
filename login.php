@@ -8,6 +8,7 @@ if(isset($_POST['login'])){
 
   if($user->login($name,$pass,$desig)){
     if($desig == 'student'){
+      $_SESSION['name']=$name;
       $user->redirect('student.php');
     }
     elseif ($desig == 'professor') {

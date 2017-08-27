@@ -15,6 +15,8 @@ catch(PDOException $e){
 }
 
 include_once 'class.user.php';
+include_once 'class.task.php';
 $user = new USER($db_con);
+$task=new TASK($db_con);
 //object of class initialised
  ?>

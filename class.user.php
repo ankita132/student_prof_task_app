@@ -29,7 +29,7 @@ class USER{
       $stmt->execute(array(':name'=>$name, ':desig'=>$desig));
       $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
       if($stmt->rowCount() > 0){
-        if($pass == $userrow['password'])){
+        if($pass == $userrow['password']){
           $_SESSION['user_id'] = $userrow['id'];
           return true;
         }
