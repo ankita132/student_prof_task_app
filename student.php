@@ -1,7 +1,11 @@
 <?php
 require_once 'db.php';
 $stmt2=$task->showtasks($_SESSION['name']);
-
+if(!$user->is_loggedin()){
+  $user->redirect('login.php');
+}
+$user_id = $_SESSION['user_id'];
+$user_name = $_SESSION['name'];
 
 ?>
 
@@ -25,13 +29,13 @@ $stmt2=$task->showtasks($_SESSION['name']);
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href=""><i class="material-icons left">note</i>Tasks Assigned</a></li>
         <li><a href=""><i class="material-icons left">description</i>All Tasks</a></li>
-        <li><a href="logout.php?logout=true"><i class="material-icons left">lock_outline</i>Logout</a></li>
+        <li><a href="logout.php"><i class="material-icons left">lock_outline</i>Logout</a></li>
       </ul>
     </div>
   </nav>
   <div class="row" style="position:relative; left:50%; transform:translateX(-25%);">
       <div class="col s12 m6">
-    <h2 class="header" style="text-align:center;">Welcome KKK</h2>
+    <h2 class="header" style="text-align:center;">Welcome <?php echo $user_name; ?></h2>
     <div class="card">
       <div class="card-stacked">
         <div class="card-content">
@@ -40,7 +44,7 @@ $stmt2=$task->showtasks($_SESSION['name']);
   <?php
         while($userrow2=$stmt2->fetch(PDO::FETCH_ASSOC)){
 
-          
+
      echo   '<li class="collection-item"><div><b>'.$userrow2['task'].'
           </b></br><span class="title">Assigned by '.$userrow2['prof'].' </span>
           <div onclick="complete('.$userrow2['sno'].')" class="secondary-content">
@@ -58,7 +62,7 @@ $stmt2=$task->showtasks($_SESSION['name']);
 
 
 <script>
-  
+
 function complete(sno){
   $.ajax({
 type:"POST",

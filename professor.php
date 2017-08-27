@@ -1,10 +1,12 @@
 <?php
 require_once 'db.php';
-
+if(!$user->is_loggedin()){
+  $user->redirect('login.php');
+}
+$user_id = $_SESSION['user_id'];
+$user_name = $_SESSION['name'];
 
 ?>
-
-
 <!doctype html>
 <html>
 <head>
@@ -22,24 +24,20 @@ require_once 'db.php';
     <div class="nav-wrapper deep-purple">
       <a href="#" class="brand-logo">Professor Dashboard</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href=""><i class="material-icons left">note</i>Tasks Assigned</a></li>
-        <li><a href=""><i class="material-icons left">description</i>All Tasks</a></li>
-        <li><a href=""><i class="material-icons left">note_add</i>Assign Tasks</a></li>
-        <li><a href="logout.php?logout=true"><i class="material-icons left">lock_outline</i>Logout</a></li>
+        <li class="assigned"><i class="material-icons left">note</i>Tasks Assigned&nbsp;&nbsp;</li>
+        <li class="all"><i class="material-icons left">description</i>All Tasks&nbsp;&nbsp;</li>
+        <li class="give"><i class="material-icons left">note_add</i>Assign Tasks&nbsp;&nbsp;</li>
+        <li><a href="logout.php"><i class="material-icons left">lock_outline</i>Logout</a></li>
       </ul>
     </div>
   </nav>
   <div class="row" style="position:relative; left:50%; transform:translateX(-25%);">
       <div class="col s12 m6">
-    <h2 class="header" style="text-align:center;">Welcome KKK</h2>
+    <h2 class="header" style="text-align:center;">Welcome <?php echo $user_name; ?></h2>
     <div class="card">
       <div class="card-stacked">
         <div class="card-content">
-         
-        
-        
-     
-      
+
         </div>
       </div>
     </div>
@@ -82,6 +80,17 @@ success:function(){
   });
 }
 
+function edit(sno){
+  $.ajax({
+    type:"POST",
+    url:"edit.php",
+    data:{"sno":sno},
+    success:function(){
+      alert("edited");
+      show();
+    }
+  })
+}
 </script>
 </body>
 </html>

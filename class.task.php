@@ -36,7 +36,11 @@ class TASK{
       echo $e->getMessage();
     }
   }
-
+//public function edit($sno){
+	//try{
+		  //$stmt = $this->db->prepare("UPDATE task SET task WHERE sno=:sno");
+	//}
+//}
 }
 
 ?>

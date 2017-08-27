@@ -31,6 +31,8 @@ class USER{
       if($stmt->rowCount() > 0){
         if($pass == $userrow['password']){
           $_SESSION['user_id'] = $userrow['id'];
+          $_SESSION['name'] = $userrow['username'];
+          $_SESSION['user_desig'] = $userrow['designation'];
           return true;
         }
         else{
@@ -45,7 +47,7 @@ class USER{
 
   public function is_loggedin(){
     if(isset($_SESSION['user_id'])){
-      return true;
+      return $_SESSION['user_desig'];
     }
   }
 

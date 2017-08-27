@@ -21,3 +21,10 @@ body {
   position: relative;
   left:15%;
 }
+.material-icons{
+  cursor: pointer;
+}
+li:hover{
+  cursor:pointer;
+  opacity:0.8;
+}

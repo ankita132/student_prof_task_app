@@ -1,6 +1,16 @@
 <?php
 require_once 'db.php';
 
+if($user->is_loggedin()!=""){
+  $pos = $user->is_loggedin();
+  if($pos == 'student'){
+    $user->redirect('student.php');
+  }
+  elseif ($pos == 'professor') {
+    $user->redirect('professor.php');
+  }
+}
+
 if(isset($_POST['login'])){
   $name = $_POST['name'];
   $pass = $_POST['password'];
@@ -12,7 +22,7 @@ if(isset($_POST['login'])){
       $user->redirect('student.php');
     }
     elseif ($desig == 'professor') {
-      $user->redirect('prof.php');
+      $user->redirect('professor.php');
     }
   }
   else{
@@ -21,7 +31,7 @@ if(isset($_POST['login'])){
         $user->redirect('student.php');
       }
       elseif ($desig == 'professor') {
-        $user->redirect('prof.php');
+        $user->redirect('professor.php');
       }
     }
   }
@@ -82,4 +92,3 @@ if(isset($_POST['login'])){
   </div>
 </body>
 </html>
-
