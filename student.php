@@ -42,9 +42,10 @@ $stmt2=$task->showtasks($_SESSION['name']);
 
           
      echo   '<li class="collection-item"><div><b>'.$userrow2['task'].'
-          </b></br><span class="title">Assigned by '.$userrow2['prof'].' </span><a href="#!" class="secondary-content">
+          </b></br><span class="title">Assigned by '.$userrow2['prof'].' </span>
+          <div onclick="complete('.$userrow2['sno'].')" class="secondary-content">
             <i class="material-icons deep-purple-text">done_all</i>
-          </a>
+          </div>
         </div>
       </li>';
       } ?>
@@ -54,5 +55,21 @@ $stmt2=$task->showtasks($_SESSION['name']);
     </div>
   </div>
 </div>
+
+
+<script>
+  
+function complete(sno){
+  $.ajax({
+type:"POST",
+url:"complete.php",
+data:{"sno":sno},
+success:function(){
+  alert("completed");
+}
+  });
+}
+
+</script>
 </body>
 </html>

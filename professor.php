@@ -1,3 +1,10 @@
+<?php
+require_once 'db.php';
+
+
+?>
+
+
 <!doctype html>
 <html>
 <head>
@@ -28,61 +35,53 @@
     <div class="card">
       <div class="card-stacked">
         <div class="card-content">
-          <ul class="collection with-header">
-        <li class="collection-header"><h4>Tasks assigned by user</h4></li>
-        <li class="collection-item"><div>Alvin
-          <a href="#!" class="secondary-content">
-            <i class="material-icons deep-purple-text">delete</i>
-          </a>
-          <a href="#!" class="secondary-content">
-            <i class="material-icons deep-purple-text">edit</i>
-          </a>
-          <a href="#!" class="secondary-content">
-            <i class="material-icons deep-purple-text">done_all</i>
-          </a>
-        </div>
-      </li>
-      <li class="collection-item"><div>Alvin
-        <a href="#!" class="secondary-content">
-          <i class="material-icons deep-purple-text">delete</i>
-        </a>
-        <a href="#!" class="secondary-content">
-          <i class="material-icons deep-purple-text">edit</i>
-        </a>
-        <a href="#!" class="secondary-content">
-          <i class="material-icons deep-purple-text">done_all</i>
-        </a>
-      </div>
-    </li>
-    <li class="collection-item"><div>Alvin
-      <a href="#!" class="secondary-content">
-        <i class="material-icons deep-purple-text">delete</i>
-      </a>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons deep-purple-text">edit</i>
-      </a>
-      <a href="#!" class="secondary-content">
-        <i class="material-icons deep-purple-text">done_all</i>
-      </a>
-    </div>
-  </li>
-  <li class="collection-item"><div>Alvin
-    <a href="#!" class="secondary-content">
-      <i class="material-icons deep-purple-text">delete</i>
-    </a>
-    <a href="#!" class="secondary-content">
-      <i class="material-icons deep-purple-text">edit</i>
-    </a>
-    <a href="#!" class="secondary-content">
-      <i class="material-icons deep-purple-text">done_all</i>
-    </a>
-  </div>
-</li>
-      </ul>
+         
+        
+        
+     
+      
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+function show(){
+  console.log("A");
+  $.ajax({
+type:"POST",
+url:"show.php",
+dataType:'html',
+success:function(response){
+   $(".card-content").html(response);
+}
+  });
+}
+show();
+  function complete(sno){
+  $.ajax({
+type:"POST",
+url:"complete.php",
+data:{"sno":sno},
+success:function(){
+  alert("completed");
+  show();
+}
+  });
+}
+
+function delete2(sno){
+   $.ajax({
+type:"POST",
+url:"delete.php",
+data:{"sno":sno},
+success:function(){
+  alert("Deleted");
+  show();
+}
+  });
+}
+
+</script>
 </body>
 </html>
