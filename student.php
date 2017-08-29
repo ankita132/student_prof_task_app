@@ -39,27 +39,51 @@ $user_name = $_SESSION['name'];
     <div class="card">
       <div class="card-stacked">
         <div class="card-content">
-          <ul class="collection with-header">
-        <li class="collection-header"><h4>Tasks assigned to user</h4></li>
-  <?php
-        while($userrow2=$stmt2->fetch(PDO::FETCH_ASSOC)){
 
-
-     echo   '<li class="collection-item"><div><b>'.$userrow2['task'].'
-          </b></br><span class="title">Assigned by <b>'.$userrow2['prof'].'</b> </span>
-          <div onclick="complete('.$userrow2['sno'].')" class="secondary-content">
-            <i class="material-icons deep-purple-text">done_all</i>
-          </div>
-        </div>
-      </li>';
-      } ?>
-      </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
 
+function show(){
+  console.log("A");
+  $.ajax({
+type:"POST",
+url:"showstudent.php",
+dataType:'html',
+success:function(response){
+   $(".card-content").html(response);
+}
+  });
+}
+show();
+
+function complete(sno){
+  $.ajax({
+type:"POST",
+url:"complete.php",
+data:{"sno":sno},
+success:function(){
+  alert("completed");
+  show();
+}
+  });
+}
+
+function edit(sno){
+$.ajax({
+  type:"POST",
+  url:"edit.php",
+  data:{"sno":sno},
+  success:function(){
+    alert("edited");
+    show();
+  }
+})
+}
+</script>
 <script src="./js/script.js"></script>
 </body>
 </html>

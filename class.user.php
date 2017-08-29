@@ -6,34 +6,17 @@ class USER{
     $this->db = $db_con;
   }
 
-  public function register($name,$pass,$desig){
+  public function login($name,$pass){
     try{
-
-      $stmt = $this->db->prepare("INSERT INTO student(username,password,designation) VALUES(:name, :pass, :desig)");
-
-      $stmt->bindparam(":name", $name);
-      $stmt->bindparam(":pass", $pass);
-      $stmt->bindparam(":desig", $desig);
-      $stmt->execute();
-
-      return $stmt;
-    }
-    catch(PDOException $e){
-      echo $e->getMessage();
-    }
-  }
-
-  public function login($name,$pass,$desig){
-    try{
-      $stmt = $this->db->prepare("SELECT * FROM student WHERE username=:name AND designation=:desig LIMIT 1");
-      $stmt->execute(array(':name'=>$name, ':desig'=>$desig));
+      $stmt = $this->db->prepare("SELECT * FROM student WHERE username=:name LIMIT 1");
+      $stmt->execute(array(':name'=>$name));
       $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
       if($stmt->rowCount() > 0){
         if($pass == $userrow['password']){
           $_SESSION['user_id'] = $userrow['id'];
           $_SESSION['name'] = $userrow['username'];
           $_SESSION['user_desig'] = $userrow['designation'];
-          return true;
+          return $userrow['designation'];
         }
         else{
           return false;

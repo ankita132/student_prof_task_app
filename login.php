@@ -1,8 +1,7 @@
 <?php
 require_once 'db.php';
-
-if($user->is_loggedin()!=""){
-  $pos = $user->is_loggedin();
+$pos = $user->is_loggedin();
+if($pos!=""){
   if($pos == 'student'){
     $user->redirect('student.php');
   }
@@ -14,9 +13,8 @@ if($user->is_loggedin()!=""){
 if(isset($_POST['login'])){
   $name = $_POST['name'];
   $pass = $_POST['password'];
-  $desig = $_POST['group1'];
-
-  if($user->login($name,$pass,$desig)){
+  if($user->login($name,$pass)){
+    $desig=$user->login($name,$pass);
     if($desig == 'student'){
       $_SESSION['name']=$name;
       $user->redirect('student.php');
@@ -25,16 +23,10 @@ if(isset($_POST['login'])){
       $user->redirect('professor.php');
     }
   }
-  else{
-    if($user->register($name,$pass,$desig)){
-      if($desig == 'student'){
-        $user->redirect('student.php');
-      }
-      elseif ($desig == 'professor') {
-        $user->redirect('professor.php');
-      }
-    }
-  }
+  else
+ {
+  $error = "Wrong Details !";
+ }
 }
 
  ?>
@@ -59,6 +51,16 @@ if(isset($_POST['login'])){
       <div class="card-panel">
         <span class="card-title">Student Professor Task App</span>
       </br>
+      <?php
+             if(isset($error))
+             {
+                   ?>
+                   <div class="alert">
+                    <p style="color:red;"><i class="material-icons" style="color:red;">error</i><?php echo $error; ?> !</p>
+                   </div>
+                   <?php
+             }
+             ?>
         <div class="row">
    <form class="col s12" method="post">
      <div class="row">
@@ -73,14 +75,6 @@ if(isset($_POST['login'])){
          <label for="password">Password</label>
        </div>
      </div>
-     <p>
-         <input name="group1" type="radio" id="student" value="student"/>
-         <label for="student">Student</label>
-       </p>
-       <p>
-         <input name="group1" type="radio" id="professor" value="professor"/>
-         <label for="professor">Professor</label>
-       </p>
      </br>
        <button class="btn waves-effect waves-light deep-purple" type="submit" name="login">Submit
    <i class="material-icons right">send</i>

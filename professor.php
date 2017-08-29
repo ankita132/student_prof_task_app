@@ -43,6 +43,15 @@ $user_name = $_SESSION['name'];
     </div>
   </div>
 </div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
 <script>
 function show(){
   console.log("A");
@@ -56,6 +65,29 @@ success:function(response){
   });
 }
 show();
+
+function complete(sno){
+$.ajax({
+type:"POST",
+url:"complete.php",
+data:{"sno":sno},
+success:function(){
+alert("completed");
+show();
+}
+});
+}
+function delete2(sno){
+ $.ajax({
+type:"POST",
+url:"delete.php",
+data:{"sno":sno},
+success:function(){
+alert("Deleted");
+show();
+}
+});
+}
 </script>
 <script src="./js/scriptprof.js"></script>
 </body>

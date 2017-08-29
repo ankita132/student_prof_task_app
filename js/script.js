@@ -29,14 +29,4 @@ $('.assigned').click(function(){
   show();
 });
 
-function complete(sno){
-  $.ajax({
-type:"POST",
-url:"complete.php",
-data:{"sno":sno},
-success:function(){
-  alert("completed");
-}
-  });
-}
 });
