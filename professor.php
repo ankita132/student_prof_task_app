@@ -1,8 +1,9 @@
 <?php
 require_once 'db.php';
-if(!$user->is_loggedin()){
-  $user->redirect('login.php');
-}
+$pos = $user->is_loggedin();
+if($pos==""|| $pos == 'student'){
+    $user->redirect('login.php');
+  }
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['name'];
 
@@ -46,18 +47,20 @@ $user_name = $_SESSION['name'];
 <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <p id="tasksno" style="display: none;"></p>
+      <input type="text" id="edittask">
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Update</a>
     </div>
   </div>
 <script>
 function show(){
-  console.log("A");
+ // console.log("A");
   $.ajax({
 type:"POST",
 url:"show.php",
+data:{"called":"true"},
 dataType:'html',
 success:function(response){
    $(".card-content").html(response);
@@ -88,6 +91,31 @@ show();
 }
 });
 }
+
+$(".modal").modal({
+  complete:function(){
+   
+    $.ajax({
+type:"POST",
+url:"edit.php",
+data:{"sno":$("#tasksno").text(),"task":$("#edittask").val()},
+success:function(){
+   //console.log("Hi");
+show();
+}
+});
+}
+});
+
+function edit(sno){
+  $("#modal1").modal('open');
+  task=$("#task"+sno).text();
+  $("#tasksno").text(sno);
+  $("#edittask").val(task.trim());
+
+}
+
+
 </script>
 <script src="./js/scriptprof.js"></script>
 </body>

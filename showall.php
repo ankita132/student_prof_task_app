@@ -1,5 +1,7 @@
 <?php
     require_once 'db.php';
+      if(!isset($_POST['called']))
+  $user->redirect('index.php');
 $stmt2=$task->showalltasks();
 ?>
 <ul class="collection with-header">

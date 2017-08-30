@@ -46,11 +46,17 @@ class TASK{
       echo $e->getMessage();
     }
   }
-//public function edit($sno){
-	//try{
-		  //$stmt = $this->db->prepare("UPDATE task SET task WHERE sno=:sno");
-	//}
-//}
+public function edit($sno,$task){
+	try{
+		  $stmt = $this->db->prepare("UPDATE task SET task=:task WHERE sno=:sno");
+      $stmt->bindParam(':task',$task);
+      $stmt->bindParam(':sno',$sno);
+      $stmt->execute();
+	}
+  catch(PDOException $e){
+      echo $e->getMessage();
+    }
+}
 }
 
 ?>

@@ -1,9 +1,10 @@
 <?php
 require_once 'db.php';
-$stmt2=$task->showtasks($_SESSION['name']);
-if(!$user->is_loggedin()){
-  $user->redirect('login.php');
-}
+
+$pos = $user->is_loggedin();
+if($pos==""|| $pos == 'professor'){
+    $user->redirect('login.php');
+  }
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['name'];
 
@@ -52,6 +53,7 @@ function show(){
   $.ajax({
 type:"POST",
 url:"showstudent.php",
+data:{"called":"true"},
 dataType:'html',
 success:function(response){
    $(".card-content").html(response);

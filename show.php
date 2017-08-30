@@ -1,5 +1,7 @@
 <?php
     require_once 'db.php';
+    if(!isset($_POST['called']))
+  $user->redirect('index.php');
 $stmt2=$task->showtasks($_SESSION['name']);
 ?>
 <ul class="collection with-header">
@@ -16,8 +18,8 @@ $stmt2=$task->showtasks($_SESSION['name']);
              </li>';
           }
           else{
-     echo  '<li class="collection-item"><div class="text"><b>'.$userrow2['task'].'
-          </b></br><span class="title">Assigned to '.$userrow2['student'].' </span>
+     echo  '<li class="collection-item"><div class="text"><p id="task'.$userrow2['sno'].'"><b>'.$userrow2['task'].'
+          </b></p></br><span class="title">Assigned to '.$userrow2['student'].' </span>
           <div onclick="delete2('.$userrow2['sno'].')" class="secondary-content">
             <i class="material-icons deep-purple-text">delete</i>
           </div>
@@ -33,4 +35,3 @@ $stmt2=$task->showtasks($_SESSION['name']);
     }
       ?>
 </ul>
-<script src="./js/scriptprof.js"></script>
