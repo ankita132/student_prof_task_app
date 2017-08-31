@@ -114,7 +114,38 @@ function edit(sno){
   $("#edittask").val(task.trim());
 
 }
+$('.give').click(function(){
+  $.ajax({
+    type:"POST",
+    url:"list.php",
+    data:{"called":"true"},
+    dataType:"html",
+    success:function(response){
+      $(".card-content").html(response);
+      
+    }
+  });
 
+});
+
+
+function assign(){
+  var chk=[];
+  $(".chk:checked").each(function(){
+    chk.push($(this).val());
+  });
+  console.log(chk);
+  $.ajax({
+    type:"POST",
+    url:"show.php",
+    data:{"task":$("#assigntask").val(),"students":chk},
+    dataType:"html",
+    success:function(response){
+      //alert("Assigned");
+     // $("#assigntask").val(response);
+    }
+  })
+}
 
 </script>
 <script src="./js/scriptprof.js"></script>

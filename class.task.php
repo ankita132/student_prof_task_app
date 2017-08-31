@@ -57,6 +57,51 @@ public function edit($sno,$task){
       echo $e->getMessage();
     }
 }
+
+public function liststudents(){
+  try{
+    $stmt=$this->db->prepare("SELECT * FROM student 
+      WHERE designation='student' AND 
+      username NOT IN (SELECT student FROM task)");
+    $stmt->execute();
+    return $stmt;
+  }
+   catch(PDOException $e){
+      echo $e->getMessage();
+    }
+}
+
+public function liststudents2(){
+  try{
+    $stmt=$this->db->prepare("SELECT * FROM task
+      WHERE status='Completed' AND 
+      sno IN (SELECT max(sno) FROM task GROUP BY student)");
+    $stmt->execute();
+    return $stmt;
+  }
+   catch(PDOException $e){
+      echo $e->getMessage();
+    }
+}
+
+public function assign($students,$task){
+  try{
+    //for($i=0;$i<sizeof($students);$i++){
+    foreach($students as $student){
+       $stmt=$this->db->prepare("INSERT INTO task(prof,student,task) VALUES(:prof,:name,:task)");
+      
+      $stmt->bindParam(":prof",$_SESSION['name']);
+      $stmt->bindParam(":name",$student);
+      $stmt->bindParam(":task",$task);
+       $stmt->execute();
+    }
+    return $students;
+  }
+  catch(PDOException $e){
+      echo $e->getMessage();
+    }
+}
+
 }
 
 ?>

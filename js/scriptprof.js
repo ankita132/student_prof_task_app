@@ -32,12 +32,5 @@ $('.assigned').click(function(){
 });
 
 
-$(".logout").click(function(){
-  $.ajax({
-    type:"POST",
-    url:"logout.php",
-    data:{"called":"true"},
-  });
-});
 
 });

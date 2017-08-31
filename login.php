@@ -20,6 +20,7 @@ if(isset($_POST['login'])){
       $user->redirect('student.php');
     }
     elseif ($desig == 'professor') {
+      $_SESSION['name']=$name;
       $user->redirect('professor.php');
     }
   }
