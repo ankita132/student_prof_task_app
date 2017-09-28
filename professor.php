@@ -46,7 +46,7 @@ $user_name = $_SESSION['name'];
 </div>
 <div id="modal1" class="modal">
     <div class="modal-content">
-      <h4>Modal Header</h4>
+      <h4>Edit Task</h4>
       <p id="tasksno" style="display: none;"></p>
       <input type="text" id="edittask">
     </div>
@@ -130,19 +130,20 @@ $('.give').click(function(){
 
 
 function assign(){
-  var chk=[];
+  var chk=new Array();
   $(".chk:checked").each(function(){
     chk.push($(this).val());
   });
   console.log(chk);
   $.ajax({
     type:"POST",
-    url:"show.php",
-    data:{"task":$("#assigntask").val(),"students":chk},
-    dataType:"html",
+    url:"assign.php",
+    data:{"task":$(".assigntask").val(),"students":chk,"called":"true"},
+    dataType:"text",
     success:function(response){
-      //alert("Assigned");
-     // $("#assigntask").val(response);
+      alert("Assigned");
+       //$(".assigntask").val(response);
+       show();
     }
   })
 }

@@ -28,8 +28,13 @@ class TASK{
 	}
   public function complete($sno){
     try{
-      $stmt = $this->db->prepare("UPDATE task SET status= 'Completed' WHERE sno=:sno");
-      $stmt->bindParam(':sno',$sno);
+      $stmt=$this->db->prepare("SELECT taskno FROM task
+        WHERE sno=:sno");
+      $stmt->execute(array(':sno'=>$sno));
+      $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
+      $taskno=$userrow['taskno'];
+      $stmt = $this->db->prepare("UPDATE task SET status= 'Completed' WHERE taskno=:taskno");
+      $stmt->bindParam(':taskno',$taskno);
       $stmt->execute();
     }
     catch(PDOException $e){
@@ -38,8 +43,13 @@ class TASK{
   }
   public function delete($sno){
     try{
-      $stmt = $this->db->prepare("DELETE FROM task WHERE sno=:sno");
-      $stmt->bindParam(':sno',$sno);
+      $stmt=$this->db->prepare("SELECT taskno FROM task
+        WHERE sno=:sno");
+      $stmt->execute(array(':sno'=>$sno));
+      $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
+      $taskno=$userrow['taskno'];
+      $stmt = $this->db->prepare("DELETE FROM task WHERE taskno=:taskno");
+      $stmt->bindParam(':taskno',$taskno);
       $stmt->execute();
     }
     catch(PDOException $e){
@@ -48,9 +58,14 @@ class TASK{
   }
 public function edit($sno,$task){
 	try{
-		  $stmt = $this->db->prepare("UPDATE task SET task=:task WHERE sno=:sno");
+     $stmt=$this->db->prepare("SELECT taskno FROM task
+        WHERE sno=:sno");
+      $stmt->execute(array(':sno'=>$sno));
+      $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
+      $taskno=$userrow['taskno'];
+		  $stmt = $this->db->prepare("UPDATE task SET task=:task WHERE taskno=:taskno");
       $stmt->bindParam(':task',$task);
-      $stmt->bindParam(':sno',$sno);
+      $stmt->bindParam(':taskno',$taskno);
       $stmt->execute();
 	}
   catch(PDOException $e){
@@ -87,12 +102,20 @@ public function liststudents2(){
 public function assign($students,$task){
   try{
     //for($i=0;$i<sizeof($students);$i++){
+    $stmt=$this->db->prepare("SELECT * FROM task WHERE taskno=(SELECT max(taskno) FROM task)");
+    $stmt->execute();
+    $userrow=$stmt->fetch(PDO::FETCH_ASSOC);
+    if($userrow)
+      $taskno=$userrow['taskno']+1;
+    else
+      $taskno=1;
     foreach($students as $student){
-       $stmt=$this->db->prepare("INSERT INTO task(prof,student,task) VALUES(:prof,:name,:task)");
+       $stmt=$this->db->prepare("INSERT INTO task(prof,student,task,taskno) VALUES(:prof,:name,:task,:taskno)");
       
       $stmt->bindParam(":prof",$_SESSION['name']);
       $stmt->bindParam(":name",$student);
       $stmt->bindParam(":task",$task);
+      $stmt->bindParam(":taskno",$taskno);
        $stmt->execute();
     }
     return $students;
